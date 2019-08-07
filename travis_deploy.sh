@@ -17,7 +17,7 @@ cd ./libvlc
 git add . --all
 cd ..
 git status # TODO
-git commit --message "libVLC v$LIBVLC_VERSION"
+git commit -m "libVLC v$LIBVLC_VERSION" -m "[ci skip]"
 git status # TODO
 
 # Upload files

@@ -1,6 +1,11 @@
 dist: bionic
 language: minimal
 
+# Build configuration
+branches:
+  only:
+    - master
+
 # Environment variables
 env:
   global:
@@ -17,8 +22,8 @@ env:
 before_install:
   - sudo apt update
   - sudo apt install -y automake ant autopoint cmake build-essential libtool-bin \
-      patch pkg-config protobuf-compiler ragel subversion unzip git \
-      openjdk-8-jre openjdk-8-jdk flex python wget
+    patch pkg-config protobuf-compiler ragel subversion unzip git \
+    openjdk-8-jre openjdk-8-jdk flex python wget
 
 # Download both Android SDK and NDK
 install:
@@ -45,10 +50,10 @@ script:
   - echo "org.gradle.daemon=true" >> gradle.properties
   - echo "org.gradle.jvmargs=-Xmx4096M" >> gradle.properties
   - sh ./compile.sh -l -a $ARCH -r >/dev/null
+  - cd ..
 
 # Prepare repository before deploying
 after_success:
-  - cd ..
   - JNILIBS_DIR=$PWD/libvlc/src/main/jniLibs/$ARCH
   - if [ -d $JNILIBS_DIR ]; then rm -rf $JNILIBS_DIR; fi
   - mkdir -p $JNILIBS_DIR
@@ -57,19 +62,12 @@ after_success:
   - if [ -d $SOURCES_DIR ]; then rm -rf $SOURCES_DIR; fi
   - mkdir -p $SOURCES_DIR
   - cp -r ./vlc-android/libvlc/src/* $SOURCES_DIR/
-  - export LIBVLC_VERSION=$(ls ./vlc-android/libvlc/build/outputs/aar/*.aar | sed 's/.aar//g' | awk -F '-' '{print $3}')
+  - export LIBVLC_VERSION=$(ls ./vlc-android/libvlc/build/outputs/aar/*.aar | sed 's/.aar//g' | awk -F '-' '{print $NF}')
   - echo $LIBVLC_VERSION # TODO
 
-# Deploy release
+# Deploy to GitHub
 deploy:
-  - provider: script
-    script: sh travis_deploy.sh
-    on:
-      branch: master
-  - provider: releases
-    api_key: $GH_TOKEN
-    file_glob: true
-    file: vlc-android/libvlc/build/outputs/aar/*
-    skip_cleanup: true
-    on:
-      tags: true
+  provider: script
+  script: sh travis_deploy.sh
+  on:
+    branch: master
