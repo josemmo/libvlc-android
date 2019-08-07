@@ -74,11 +74,11 @@ after_success:
   - mkdir -p $SOURCES_DIR
   - cp -r ./vlc-android/libvlc/src/* $SOURCES_DIR/
   - export LIBVLC_VERSION=$(ls ./vlc-android/libvlc/build/outputs/aar/*.aar | sed 's/.aar//g' | awk -F '-' '{print $NF}')
-  - echo $LIBVLC_VERSION # TODO
 
 # Deploy to GitHub
 deploy:
   provider: script
   script: sh travis_deploy.sh
+  skip_cleanup: true
   on:
     branch: master
