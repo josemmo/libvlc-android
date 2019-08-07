@@ -18,12 +18,23 @@ env:
     - ARCH=x86
     - ARCH=x86_64
 
-# Install build dependencies
-before_install:
-  - sudo apt update
-  - sudo apt install -y automake ant autopoint cmake build-essential libtool-bin \
-    patch pkg-config protobuf-compiler ragel subversion unzip git \
-    openjdk-8-jre openjdk-8-jdk flex python wget
+# Define dependencies
+addons:
+  apt:
+    update: true
+    packages:
+      - automake
+      - ant
+      - autopoint
+      - cmake
+      - build-essential
+      - libtool-bin
+      - patch
+      - pkg-config
+      - protobuf-compiler
+      - ragel
+      - openjdk-8-jre
+      - openjdk-8-jdk
 
 # Download both Android SDK and NDK
 install:
