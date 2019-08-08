@@ -1,7 +1,10 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    defaultConfig {
+        compileSdkVersion 28
+        minSdkVersion 17
+    }
 
     buildTypes {
         release {
@@ -9,4 +12,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
