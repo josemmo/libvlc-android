@@ -65,14 +65,22 @@ script:
 
 # Prepare repository before deploying
 after_success:
+  # Extract binaries from AAR
   - JNILIBS_DIR=$PWD/libvlc/src/main/jniLibs/$ARCH
   - if [ -d $JNILIBS_DIR ]; then rm -rf $JNILIBS_DIR; fi
   - mkdir -p $JNILIBS_DIR
   - unzip -j ./vlc-android/libvlc/build/outputs/aar/*.aar "jni/$ARCH/*" -d $JNILIBS_DIR
+  # Copy source classes
   - SOURCES_DIR=$PWD/libvlc/src/main/java
   - if [ -d $SOURCES_DIR ]; then rm -rf $SOURCES_DIR; fi
   - mkdir -p $SOURCES_DIR
   - cp -r ./vlc-android/libvlc/src/* $SOURCES_DIR/
+  # Copy resource files
+  - RES_DIR=$PWD/libvlc/src/main/res
+  - if [ -d $RES_DIR ]; then rm -rf $RES_DIR; fi
+  - mkdir -p $RES_DIR
+  - cp -r ./vlc-android/libvlc/res/* $RES_DIR/
+  # Get compiled libVLC version name
   - export LIBVLC_VERSION=$(ls ./vlc-android/libvlc/build/outputs/aar/*.aar | sed 's/.aar//g' | awk -F '-' '{print $NF}')
 
 # Deploy to GitHub
