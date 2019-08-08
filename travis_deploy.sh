@@ -4,7 +4,7 @@
 DELAY=$(echo $TRAVIS_JOB_NUMBER | awk -F '.' '{print $NF}')
 DELAY=$(($DELAY - 1))
 DELAY=$(($DELAY * 2 * 60))
-if (( $DELAY > 0 )); then
+if [ $DELAY -gt "0" ]; then
     echo "Waiting $DELAY seconds before deploying"
     sleep $DELAY
 fi
