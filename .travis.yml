@@ -9,9 +9,11 @@ branches:
 # Environment variables
 env:
   global:
-    - VLC_VERSION=3.0.99
+    - VLC_VERSION=3.1.7
     - SDK_REVISION=4333796
     - NDK_VERSION=r18b
+    - GRADLE_VERSION=5.1.1
+    - IS_TEST_RUN=false
   matrix:
     - ARCH=armeabi-v7a
     - ARCH=arm64-v8a
@@ -56,10 +58,20 @@ before_script:
 # Build libVLC
 script:
   - cd ./vlc-android
+  # Change Gradle configuration
   - echo "org.gradle.parallel=true" >> gradle.properties
   - echo "org.gradle.configureondemand=true" >> gradle.properties
   - echo "org.gradle.daemon=true" >> gradle.properties
   - echo "org.gradle.jvmargs=-Xmx4096M" >> gradle.properties
+  # Initialize and download Gradle
+  - mkdir -p ./gradle/wrapper
+  - sh ./compile.sh --init
+  - wget -q https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
+  - unzip -q gradle-$GRADLE_VERSION-bin.zip
+  - sh ./gradle-$GRADLE_VERSION/bin/gradle wrapper
+  - chmod a+x gradlew
+  - rm gradle-$GRADLE_VERSION-bin.zip
+  # Execute compile script
   - sh ./compile.sh -l -a $ARCH -r >/dev/null
   - cd ..
 
@@ -90,3 +102,4 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
+    condition: $IS_TEST_RUN = false
