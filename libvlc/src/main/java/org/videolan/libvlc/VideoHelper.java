@@ -89,8 +89,9 @@ class VideoHelper implements IVLCVout.OnNewVideoLayoutListener {
             vlcVout.setVideoView(mVideoSurface);
             if (mSubtitlesSurface != null)
                 vlcVout.setSubtitlesView(mSubtitlesSurface);
-        } else
+        } else if (mVideoTexture != null)
             vlcVout.setVideoView(mVideoTexture);
+        else return;
         vlcVout.attachViews(this);
 
         if (mOnLayoutChangeListener == null) {
@@ -125,6 +126,7 @@ class VideoHelper implements IVLCVout.OnNewVideoLayoutListener {
     }
 
     private void changeMediaPlayerLayout(int displayW, int displayH) {
+        if (mMediaPlayer.isReleased()) return;
         /* Change the video placement using the MediaPlayer API */
         switch (mCurrentScaleType) {
             case SURFACE_BEST_FIT:
@@ -184,6 +186,7 @@ class VideoHelper implements IVLCVout.OnNewVideoLayoutListener {
 
     @TargetApi(Build.VERSION_CODES.N)
     void updateVideoSurfaces() {
+        if (mMediaPlayer == null || mMediaPlayer.isReleased()) return;
         final boolean isPrimary = mDisplayManager == null || mDisplayManager.isPrimary();
         final Activity activity = isPrimary && mVideoSurfaceFrame.getContext() instanceof Activity ? (Activity) mVideoSurfaceFrame.getContext() : null;
 
