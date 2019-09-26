@@ -9,10 +9,10 @@ branches:
 # Environment variables
 env:
   global:
-    - VLC_VERSION=3.1.7
+    - VLC_VERSION=3.2.0-beta-05
     - SDK_REVISION=4333796
     - NDK_VERSION=r18b
-    - GRADLE_VERSION=5.1.1
+    - GRADLE_VERSION=5.4.1
     - IS_TEST_RUN=false
   matrix:
     - ARCH=armeabi-v7a
