@@ -1,5 +1,7 @@
 package org.videolan.libvlc;
 
+import androidx.annotation.Nullable;
+
 @SuppressWarnings("unused, JniMissingFunction")
 public class RendererItem extends VLCObject<RendererItem.Event> {
 
@@ -18,7 +20,7 @@ public class RendererItem extends VLCObject<RendererItem.Event> {
     RendererItem(String name, String type, String iconUrl, int flags, long ref) {
         final int index = name.lastIndexOf('-');
         this.name = name;
-        this.displayName = index == -1 ? name : name.substring(0, index).replace('-', ' ');
+        this.displayName = index == -1 ? name : name.replace('-', ' ');
         this.type = type;
         this.iconUrl = iconUrl;
         this.flags = flags;
@@ -31,7 +33,7 @@ public class RendererItem extends VLCObject<RendererItem.Event> {
     }
 
     @Override
-    protected Event onEventNative(int eventType, long arg1, long arg2, float argf1) {
+    protected Event onEventNative(int eventType, long arg1, long arg2, float argf1, @Nullable String args1) {
         return new Event(eventType);
     }
 
