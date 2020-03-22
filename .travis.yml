@@ -102,6 +102,7 @@ after_success:
 deploy:
   provider: script
   script: cd $TRAVIS_BUILD_DIR && sh travis_deploy.sh
+  cleanup: false
   on:
     branch: master
     condition: $IS_TEST_RUN = false
