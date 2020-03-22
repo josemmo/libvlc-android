@@ -13,7 +13,7 @@ env:
     - SDK_REVISION=4333796
     - NDK_VERSION=r18b
     - GRADLE_VERSION=5.4.1
-    - IS_TEST_RUN=true
+    - IS_TEST_RUN=false
   matrix:
     - ARCH=armeabi-v7a
     - ARCH=arm64-v8a
