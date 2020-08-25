@@ -9,10 +9,10 @@ branches:
 # Environment variables
 env:
   global:
-    - VLC_VERSION=3.2.9
+    - VLC_VERSION=libvlc-3.3.0-eap17
     - SDK_REVISION=4333796
-    - NDK_VERSION=r18b
-    - GRADLE_VERSION=5.4.1
+    - NDK_VERSION=r21b
+    - GRADLE_VERSION=6.6
     - IS_TEST_RUN=false
   matrix:
     - ARCH=armeabi-v7a
@@ -69,14 +69,14 @@ script:
   - echo "org.gradle.jvmargs=-Xmx4096M" >> gradle.properties
   # Initialize and download Gradle
   - mkdir -p ./gradle/wrapper
-  - sh ./compile.sh --init
+  - sh ./buildsystem/compile.sh --init
   - wget -q https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
   - unzip -q gradle-$GRADLE_VERSION-bin.zip
   - sh ./gradle-$GRADLE_VERSION/bin/gradle wrapper
   - chmod a+x gradlew
   - rm gradle-$GRADLE_VERSION-bin.zip
   # Execute compile script
-  - sh ./compile.sh -l -a $ARCH -r >/dev/null
+  - sh ./buildsystem/compile.sh -l -a $ARCH -r >/dev/null
 
 # Prepare repository before deploying
 after_success:
