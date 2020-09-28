@@ -3,6 +3,17 @@
 [![Travis](https://travis-ci.com/josemmo/libvlc-android.svg?branch=master)](https://travis-ci.com/josemmo/libvlc-android)
 [![GitHub license](https://img.shields.io/github/license/josemmo/libvlc-android)](https://github.com/josemmo/libvlc-android/blob/master/COPYING)
 
+## DEPRECATED
+This project has been deprecated as now there is an official LibVLC compiled artifact from VideoLAN.
+
+To use it, go to https://code.videolan.org/videolan/vlc-android/-/tags and find the latest release.
+Then, add this line to your project dependencies:
+```
+implementation 'org.videolan.android:libvlc-all:{THE-TAG-NAME}
+```
+
+---
+
 Unofficial ready-to-use compiled version of libVLC for Android. Just add this library to your project dependencies.
 
 ## Usage
