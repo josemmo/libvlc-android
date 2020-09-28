@@ -9,7 +9,7 @@ This project has been deprecated as now there is an official LibVLC compiled art
 To use it, go to https://code.videolan.org/videolan/vlc-android/-/tags and find the latest release.
 Then, add this line to your project dependencies:
 ```
-implementation 'org.videolan.android:libvlc-all:{THE-TAG-NAME}
+implementation 'org.videolan.android:libvlc-all:{THE-TAG-NAME}'
 ```
 
 ---
